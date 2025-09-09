@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# rn-expense-tracker
+A simple React Native app for tracking expenses locally.
+This project is designed for **learning navigation and state management** in React Native.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Features
+- Add Expense Screen – Input expense amount, category, and date.
+- Expense List Screen – View all expenses in a scrollable list with totals.
+- Monthly Summary Screen – See total monthly expenses with a chart (per category).
+- Local State Only – No backend, data stored in memory (optional: `AsyncStorage`).
 
-## Get started
+## Learning Goals
+- Practice multi-screen navigation using `react-navigation`.
+- Manage shared state across screens (with Context API or Zustand/Redux).
+- Display charts with `react-native-svg-charts` or `react-native-chart-kit`.
+- Optionally, persist data with `AsyncStorage`.
 
-1. Install dependencies
+## Screens
+**1. Expense List**
+- Displays all expenses.
+- Button → Navigate to Add Expense.
 
-   ```bash
-   npm install
-   ```
+**2. Add Expense**
+- Form inputs: Amount, Category, Date (default: today).
+- Button → Save expense and return to List.
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**3. Monthly Summary**
+- Shows total expenses this month.
+- Displays a pie or bar chart grouped by category.
