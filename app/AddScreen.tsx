@@ -15,11 +15,6 @@ const AddScreen = () => {
             <TextInput
                 style={styles.textInput}
                 value={expense.toString()}
-                // onChangeText={val => {
-                //     // allow only digits
-                //     const numericVal = val.replace(/[^0-9]/g, '');
-                //     setExpense(numericVal);
-                // }}
                 onChangeText={val => setExpense(Number(val))}
                 keyboardType='numeric'
                 inputMode='numeric' />
