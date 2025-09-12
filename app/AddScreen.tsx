@@ -1,12 +1,39 @@
 
-import { Text, View } from 'react-native';
+import { ExpenseContext } from '@/context/ExpenseContext';
+import { useContext, useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const AddScreen = () => {
-    return(
+    const expenseContext = useContext(ExpenseContext);
+    if (!expenseContext) throw new Error('Context not available')
+    const { totalExpense, addExpense } = expenseContext;
+
+    const [expense, setExpense] = useState<number>(0);
+    return (
         <View>
-            <Text>This is AddScreen</Text>
+            <Text>Total Expense: {totalExpense}</Text>
+            <TextInput
+                style={styles.textInput}
+                value={expense.toString()}
+                // onChangeText={val => {
+                //     // allow only digits
+                //     const numericVal = val.replace(/[^0-9]/g, '');
+                //     setExpense(numericVal);
+                // }}
+                onChangeText={val => setExpense(Number(val))}
+                keyboardType='numeric'
+                inputMode='numeric' />
+            <TouchableOpacity onPress={() => addExpense(expense)}>
+                <Text>+</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
 export default AddScreen;
+
+const styles = StyleSheet.create({
+    textInput: {
+        backgroundColor: '#adadadff'
+    }
+})
