@@ -1,5 +1,10 @@
+import ExpenseProvider from "@/context/ExpenseContext";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
-  return <Stack />;
+    return (
+        <ExpenseProvider>
+            <Stack />
+        </ExpenseProvider>
+    );
 }
