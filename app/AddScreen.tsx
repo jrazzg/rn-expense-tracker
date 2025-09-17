@@ -11,7 +11,7 @@ const AddScreen = () => {
 
     type ExpenseCategory = 'Alpha' | 'Beta' | 'Sigma';
     const myCategory: ExpenseCategory[] = ['Alpha', 'Beta', 'Sigma'];
-    const [selectedCat, setSelectedCat] = useState<ExpenseCategory>('Sigma');
+    const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory>('Sigma');
 
     return (
         <View>
@@ -28,16 +28,17 @@ const AddScreen = () => {
             {
                 myCategory.map((item) =>
                     <TouchableOpacity
-                        onPress={() => setSelectedCat(item)}
+                        onPress={() => setSelectedCategory(item)}
                         // key={item}
                         style={{
-                            backgroundColor: selectedCat == item ? 'rgba(80, 156, 231, 1)' : 'white'
+                            backgroundColor: selectedCategory == item ? 'rgba(80, 156, 231, 1)' : 'white'
                         }}
                     >
                         <Text>{item}</Text>
                     </TouchableOpacity>
                 )
             }
+            <Text style={styles.title}>{selectedCategory}</Text>
             <TouchableOpacity onPress={() => addExpense(expense)}><Text>Add</Text></TouchableOpacity>
         </View>
     );
