@@ -8,7 +8,7 @@ export default function Index() {
     const expenseContext = useContext(ExpenseContext);
 
     if (!expenseContext) throw new Error('Context not available');
-    const { totalExpense, addExpense } = expenseContext;
+    const { totalExpense, expenseList} = expenseContext;
 
     return (
         <View
@@ -18,13 +18,16 @@ export default function Index() {
                 alignItems: "center",
             }}
         >
-            <Text>THIS IS HOME</Text>
-            <Text style={{ fontSize: 20 }}>{totalExpense}</Text>
+            <Text style={{ fontSize: 20 }}>Total Expense: {totalExpense}</Text>
+            {
+                expenseList.map((item, index) => 
+                    <Text key={index} style={{ fontSize: 20 }}>{item.expense} | {item.category}</Text>
+                )
+            }
+
             <TouchableOpacity onPress={() => router.navigate('/SummaryScreen')}>
                 <Text>See more</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => addExpense(9)}><Text>+9</Text></TouchableOpacity>
 
             <TouchableOpacity onPress={() => router.navigate('/AddScreen')}>
                 <Text>AddExpense</Text>
