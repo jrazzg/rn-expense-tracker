@@ -13,6 +13,16 @@ const AddScreen = () => {
     const myCategory: ExpenseCategory[] = ['Alpha', 'Beta', 'Sigma'];
     const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory>('Sigma');
 
+    type myArray = {
+        expense: number,
+        category: string,
+    }
+    const [tryArray, setTryArray] = useState<myArray[]>([]);
+
+    const updateTryArray = () => {
+        setTryArray(prev => [...prev, { expense: 200, category: 'food' }]);
+    };
+
     return (
         <View>
             <Text>Total Expense: {totalExpense}</Text>
@@ -26,8 +36,9 @@ const AddScreen = () => {
 
             <Text style={styles.title}>Category</Text>
             {
-                myCategory.map((item) =>
+                myCategory.map((item, index) =>
                     <TouchableOpacity
+                        key={index}
                         onPress={() => setSelectedCategory(item)}
                         // key={item}
                         style={{
@@ -39,7 +50,13 @@ const AddScreen = () => {
                 )
             }
             <Text style={styles.title}>{selectedCategory}</Text>
-            <TouchableOpacity onPress={() => addExpense(expense)}><Text>Add</Text></TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => addExpense(expense)}><Text>Add</Text></TouchableOpacity> */}
+            <TouchableOpacity onPress={updateTryArray}><Text>Add</Text></TouchableOpacity>            
+            {
+                tryArray.map((item, index) => (
+                    <Text key={index} style={[styles.title, { color: 'red' }]}>{item.category} | {item.expense}</Text>
+                ))
+            }
         </View>
     );
 };
