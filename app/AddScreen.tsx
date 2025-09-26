@@ -6,21 +6,17 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 const AddScreen = () => {
     const expenseContext = useContext(ExpenseContext);
     if (!expenseContext) throw new Error('Context not available')
-    const { totalExpense, addExpense } = expenseContext;
+    const { totalExpense, addExpense, expenseList } = expenseContext;
     const [expense, setExpense] = useState<number>(0);
 
     type ExpenseCategory = 'Alpha' | 'Beta' | 'Sigma';
     const myCategory: ExpenseCategory[] = ['Alpha', 'Beta', 'Sigma'];
     const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory>('Sigma');
 
-    type myArray = {
-        expense: number,
-        category: string,
-    }
-    const [tryArray, setTryArray] = useState<myArray[]>([]);
-
-    const updateTryArray = () => {
-        setTryArray(prev => [...prev, { expense: 200, category: 'food' }]);
+    const updateTryArray = (exp: number, cat: string) => {
+        addExpense(exp, cat)
+        setSelectedCategory('Sigma')
+        setExpense(0)
     };
 
     return (
@@ -49,12 +45,11 @@ const AddScreen = () => {
                     </TouchableOpacity>
                 )
             }
-            <Text style={styles.title}>{selectedCategory}</Text>
             {/* <TouchableOpacity onPress={() => addExpense(expense)}><Text>Add</Text></TouchableOpacity> */}
-            <TouchableOpacity onPress={updateTryArray}><Text>Add</Text></TouchableOpacity>            
+            <TouchableOpacity onPress={() => updateTryArray(expense, selectedCategory)}><Text>Add</Text></TouchableOpacity>            
             {
-                tryArray.map((item, index) => (
-                    <Text key={index} style={[styles.title, { color: 'red' }]}>{item.category} | {item.expense}</Text>
+                expenseList.map((item, index) => (
+                    <Text key={index} style={[styles.title, { color: 'red' }]}>{item.expense} | {item.category}</Text>
                 ))
             }
         </View>
