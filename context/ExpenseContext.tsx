@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 type ExpenseListType = {
     expense: number,
@@ -24,7 +24,7 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
     const [expenseList, setExpenseList] = useState<ExpenseListType[]>([]);
 
     const addExpense = (val: number, cat: string) => {
-        const newList = [...expenseList, { expense: val, category: cat}]
+        const newList = [...expenseList, { expense: val, category: cat }]
         // setExpenseList(prev => [...prev, { expense: val, category: cat }]);
         setExpenseList(newList);
         setTotalExpense(prev => prev + val);
@@ -44,10 +44,10 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
         try {
             const jsonValue = await AsyncStorage.getItem('expense_list');
             // jsonValue != null ? setExpenseList(JSON.parse(jsonValue)) : null;
-            if (jsonValue != null){
+            if (jsonValue != null) {
                 const parsedJSON = JSON.parse(jsonValue)
                 setExpenseList(parsedJSON)
-                
+
                 const total = parsedJSON.reduce((acc: number, item: ExpenseListType) => acc + item.expense, 0);
                 setTotalExpense(total)
             }
@@ -55,6 +55,10 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
             console.log(e)
         }
     };
+
+    useEffect(() => {
+        getData();
+    }, [])
 
     return (
         <ExpenseContext.Provider value={{ totalExpense, expenseList, addExpense, getData }}>

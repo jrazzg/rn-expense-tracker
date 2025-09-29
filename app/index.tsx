@@ -1,7 +1,7 @@
 import Expense from "@/components/Expense";
 import { ExpenseContext } from "@/context/ExpenseContext";
 import { useRouter } from "expo-router";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
@@ -11,10 +11,6 @@ export default function Index() {
 
     if (!expenseContext) throw new Error('Context not available');
     const { totalExpense, expenseList, getData } = expenseContext;
-
-    useEffect(() => {
-        getData();
-    }, [])
 
     return (
         <View style={styles.container}>
