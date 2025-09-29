@@ -43,7 +43,14 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
     const getData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('expense_list');
-            jsonValue != null ? setExpenseList(JSON.parse(jsonValue)) : null;
+            // jsonValue != null ? setExpenseList(JSON.parse(jsonValue)) : null;
+            if (jsonValue != null){
+                const parsedJSON = JSON.parse(jsonValue)
+                setExpenseList(parsedJSON)
+                
+                const total = parsedJSON.reduce((acc: number, item: ExpenseListType) => acc + item.expense, 0);
+                setTotalExpense(total)
+            }
         } catch (e) {
             console.log(e)
         }
