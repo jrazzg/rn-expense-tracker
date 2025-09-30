@@ -31,7 +31,7 @@ export default function Index() {
                 }
             />
             <TouchableOpacity onPress={() => router.navigate('/AddScreen')}>
-                <Text>AddExpense</Text>
+                <Text style={styles.button}>Add Expense</Text>
             </TouchableOpacity>
         </View>
     );
@@ -55,5 +55,17 @@ const styles = StyleSheet.create({
     flatList: {
         marginTop: 20,
         width: '100%',
-    }
+    },
+    button: {
+        marginVertical: 20,
+        padding: 10,
+        paddingHorizontal: 30,
+        backgroundColor: '#509ce7ff',
+        alignItems: 'center',
+        borderRadius: 5,
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        fontWeight: '800',
+        color: 'white',
+    },
 })
