@@ -8,22 +8,35 @@ const SummaryScreen = () => {
     if (!expenseContext) throw new Error('Context not available');
     const { totalExpense, expenseList } = expenseContext;
 
-    console.log(expenseList)
+    // Group by category and sum expenses
+    const grouped = expenseList.reduce((acc: Record<string, number>, item) => {
+        acc[item.category] = (acc[item.category] || 0) + item.expense;
+        return acc;
+    }, {})
+    
+    /*  
+    convert object from: 
+        [{ category: Beta, expense: 10}, 
+         { category: Sigma, expense: 20}]
+    into: 
+        { Alpha: 123, Beta: 123, Sigma: 123}
+    */
 
-    const barData = [
-        { value: 250, label: 'M' },
-        { value: 500, label: 'T', frontColor: '#177AD5' },
-        { value: 745, label: 'W', frontColor: '#177AD5' },
-        { value: 320, label: 'T' },
-        { value: 600, label: 'F', frontColor: '#177AD5' },
-        { value: 256, label: 'S' },
-        { value: 300, label: 'S' },
-        { value: 300, label: 'S' },
-        { value: 300, label: 'S' },
-        { value: 300, label: 'S' },
-    ];
+    // Convert into chart format
+    const barData = Object.entries(grouped).map(([category, total]) => ({
+        value: total,
+        label: category,
+        frontColor: '#177AD5'
+    }));
 
-    [{ "category": "Beta", "expense": 192 }, { "category": "Alpha", "expense": 50 }, { "category": "Alpha", "expense": 2 }, { "category": "Beta", "expense": 3 }, { "category": "Sigma", "expense": 34 }, { "category": "Beta", "expense": 12 }, { "category": "Sigma", "expense": 343 }, { "category": "Alpha", "expense": 23 }, { "category": "Beta", "expense": 343 }, { "category": "Beta", "expense": 2345 }, { "category": "Sigma", "expense": 11 }, { "category": "Sigma", "expense": 10 }]
+    /*  
+    convert object from: 
+        { Alpha: 123, Beta: 123, Sigma: 123}
+    into: 
+        [{ value: 123, label: 'Beta', frontColor: '#177AD5' }, 
+         { value: 123, label: 'Sigma', frontColor: '#177AD5' }]  
+    */
+
 
     return (
         <View>
@@ -53,4 +66,4 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         padding: 20,
     },
-})
+});
