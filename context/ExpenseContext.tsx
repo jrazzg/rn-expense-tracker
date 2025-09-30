@@ -11,6 +11,7 @@ type ExpenseContextType = {
     expenseList: ExpenseListType[];
     addExpense: (val: number, category: string) => void;
     getData: () => void;
+    clearData: () => void;
 }
 
 export const ExpenseContext = createContext<ExpenseContextType | undefined>(undefined);
@@ -39,6 +40,16 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
             console.log(e)
         }
     };
+    
+    const clearData = async () => {
+        try {
+            await AsyncStorage.setItem('expense_list', JSON.stringify([]));
+            setExpenseList([]);
+            setTotalExpense(0);
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     const getData = async () => {
         try {
@@ -61,7 +72,7 @@ const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
     }, [])
 
     return (
-        <ExpenseContext.Provider value={{ totalExpense, expenseList, addExpense, getData }}>
+        <ExpenseContext.Provider value={{ totalExpense, expenseList, addExpense, getData, clearData }}>
             {children}
         </ExpenseContext.Provider>
     );

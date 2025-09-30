@@ -1,19 +1,19 @@
 import { ExpenseContext } from "@/context/ExpenseContext";
 import { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 
 const SummaryScreen = () => {
     const expenseContext = useContext(ExpenseContext);
     if (!expenseContext) throw new Error('Context not available');
-    const { totalExpense, expenseList } = expenseContext;
+    const { totalExpense, expenseList, clearData } = expenseContext;
 
     // Group by category and sum expenses
     const grouped = expenseList.reduce((acc: Record<string, number>, item) => {
         acc[item.category] = (acc[item.category] || 0) + item.expense;
         return acc;
     }, {})
-    
+
     /*  
     convert object from: 
         [{ category: Beta, expense: 10}, 
@@ -39,9 +39,8 @@ const SummaryScreen = () => {
 
 
     return (
-        <View>
-            <Text>Total Expense: </Text>
-            <Text>{totalExpense}</Text>
+        <View style={styles.container}>
+            <Text style={styles.totalExpense}> Total Expense: {totalExpense}</Text>
             <View style={styles.barChart}>
                 <BarChart
                     barWidth={22}
@@ -53,6 +52,7 @@ const SummaryScreen = () => {
                     xAxisThickness={0}
                 />
             </View>
+            <TouchableOpacity onPress={clearData}><Text style={styles.button}>Clear Records</Text></TouchableOpacity>
         </View>
     )
 }
@@ -60,10 +60,30 @@ const SummaryScreen = () => {
 export default SummaryScreen;
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
     barChart: {
         backgroundColor: '#ffffffff',
         borderRadius: 20,
         alignSelf: 'center',
         padding: 20,
+    },
+    totalExpense: {
+        fontSize: 30,
+        fontWeight: '700',
+        marginBottom: 20,
+    },
+    button: {
+        marginVertical: 20,
+        padding: 10,
+        paddingHorizontal: 30,
+        backgroundColor: '#e75050ff',
+        alignItems: 'center',
+        borderRadius: 5,
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        fontWeight: '800',
+        color: 'white',
     },
 });
